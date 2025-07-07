@@ -1,0 +1,11 @@
+Array
+(
+    [widget_name] => aaee yoo
+    [feed_url] => https://example.com/garden
+    [layout] => magazine
+    [sublayout] => large
+    [width_mode] => responsive
+    [width_value] => 350
+    [height_mode] => pixels
+    [height_value] => 200
+)
