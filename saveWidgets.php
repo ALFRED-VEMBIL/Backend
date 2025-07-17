@@ -2,81 +2,74 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-
-header("Access-Control-Allow-Origin: http://localhost:3000");
-
-header("Access-Control-Allow-Origin: *"); // allow any origin — use "*" only for development
+// CORS headers
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Content-Type: application/json");
 
-// If this is a preflight request (OPTIONS), exit early
+// Handle preflight (OPTIONS) request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    exit(0);
-}
-
-
-
-// connect to DB
-$mysqli = new mysqli("localhost", "root", "", "college");
-if ($mysqli->connect_error) {
-    http_response_code(500);
-    echo json_encode(["success"=>false,"error"=>"DB connection failed: " . $mysqli->connect_error]);
+    http_response_code(200);
     exit();
 }
 
-// get POST data from FormData
-$widgetName = $_POST["widget_name"] ?? null;
-$feedUrl = $_POST["feed_url"] ?? null;
-$layout = $_POST["layout"] ?? null;
-$sublayout = $_POST["sublayout"] ?? null;
-$widthMode = $_POST["width_mode"] ?? null;
-$widthValue = $_POST["width_value"] ?? null;
-$heightMode = $_POST["height_mode"] ?? null;
-$heightValue = $_POST["height_value"] ?? null;
+// Connect to DB
+$mysqli = new mysqli("localhost", "root", "", "college");
+if ($mysqli->connect_error) {
+    http_response_code(500);
+    echo json_encode(["success" => false, "error" => "DB connection failed: " . $mysqli->connect_error]);
+    exit();
+}
 
-// debug to file
-file_put_contents("debug_post.txt", print_r($_POST, true));
+// Read raw JSON input
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
 
-// validation
-if (
-    !$widgetName || !$feedUrl || !$layout || !$sublayout ||
-    !$widthMode || !$widthValue || !$heightMode || !$heightValue
-) {
+// 🔍 Debug: Check if JSON is valid
+if ($data === null) {
+    http_response_code(400);
     echo json_encode([
-        "success"=>false,
-        "error"=>"Missing fields",
-        "debug"=>$_POST
+        "success" => false,
+        "error" => "Invalid JSON input",
+        "raw_input" => $input  // 👈 DEBUG this in frontend/postman
     ]);
     exit();
 }
 
-// insert
-$stmt = $mysqli->prepare("
-    INSERT INTO Widgets
-    (widget_name, feed_url, layout, sublayout, width_mode, width_value, height_mode, height_value)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-");
-if (!$stmt) {
-    echo json_encode(["success"=>false, "error"=>"Prepare failed: " . $mysqli->error]);
+// Optional: Debug to file (helpful for you during dev)
+file_put_contents("debug_json.txt", print_r($data, true));
+
+// Grab values from decoded JSON
+$userId = $data["user_id"] ?? null;
+$widgetName = $data["widget_name"] ?? null;
+$jsonString = json_encode($data); // full JSON blob
+
+// Validate required fields
+if (!$userId || !$widgetName) {
+    http_response_code(400);
+    echo json_encode([
+        "success" => false,
+        "error" => "Missing user_id or widget_name"
+    ]);
     exit();
 }
-$stmt->bind_param(
-    "ssssssis",
-    $widgetName,
-    $feedUrl,
-    $layout,
-    $sublayout,
-    $widthMode,
-    $widthValue,
-    $heightMode,
-    $heightValue
-);
+
+// ✅ Insert into widgetjson table
+$stmt = $mysqli->prepare("INSERT INTO widgetjson (user_id, widget_name, widget) VALUES (?, ?, ?)");
+if (!$stmt) {
+    echo json_encode(["success" => false, "error" => "Prepare failed: " . $mysqli->error]);
+    exit();
+}
+
+$stmt->bind_param("iss", $userId, $widgetName, $jsonString);
 
 if ($stmt->execute()) {
-    echo json_encode(["success"=>true,"message"=>"Widget saved"]);
+    echo json_encode(["success" => true, "message" => "Widget saved successfully"]);
 } else {
-    echo json_encode(["success"=>false,"error"=>"Execute failed: " . $stmt->error]);
+    echo json_encode(["success" => false, "error" => "Execute failed: " . $stmt->error]);
 }
+
 $stmt->close();
 $mysqli->close();
 ?>
