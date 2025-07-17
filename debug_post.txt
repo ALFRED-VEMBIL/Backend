@@ -1,11 +1,12 @@
 Array
 (
-    [widget_name] => aaee yoo
-    [feed_url] => https://example.com/garden
+    [widget_name] => alfred
+    [feed_url] => https://example.com/xbox-2025
     [layout] => magazine
-    [sublayout] => large
+    [sublayout] => small
     [width_mode] => responsive
     [width_value] => 350
     [height_mode] => pixels
-    [height_value] => 200
+    [height_value] => 510
+    [topic] => Most Anticipated Xbox Games This Year
 )

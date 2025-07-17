@@ -7,14 +7,12 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-
-// Handle preflight request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
-// Connect to DB
+// DB connection
 $mysqli = new mysqli("localhost", "root", "", "college");
 if ($mysqli->connect_error) {
     http_response_code(500);
@@ -32,11 +30,12 @@ $widthMode = $_POST["width_mode"] ?? null;
 $widthValue = $_POST["width_value"] ?? null;
 $heightMode = $_POST["height_mode"] ?? null;
 $heightValue = $_POST["height_value"] ?? null;
+$topic = $_POST["topic"] ?? null;
 
 // Validation
 if (
     !$id || !$widgetName || !$feedUrl || !$layout || !$sublayout ||
-    !$widthMode || !$widthValue || !$heightMode || !$heightValue
+    !$widthMode || !$widthValue || !$heightMode || !$heightValue || !$topic
 ) {
     echo json_encode([
         "success" => false,
@@ -46,20 +45,21 @@ if (
     exit();
 }
 
-// Update statement
+// ✅ Updated query to include `topic`
 $stmt = $mysqli->prepare("
     UPDATE Widgets
     SET widget_name = ?, feed_url = ?, layout = ?, sublayout = ?,
-        width_mode = ?, width_value = ?, height_mode = ?, height_value = ?
+        width_mode = ?, width_value = ?, height_mode = ?, height_value = ?, topic = ?
     WHERE id = ?
 ");
+
 if (!$stmt) {
     echo json_encode(["success" => false, "error" => "Prepare failed: " . $mysqli->error]);
     exit();
 }
 
 $stmt->bind_param(
-    "ssssssisi",
+    "ssssssissi",
     $widgetName,
     $feedUrl,
     $layout,
@@ -68,6 +68,7 @@ $stmt->bind_param(
     $widthValue,
     $heightMode,
     $heightValue,
+    $topic,
     $id
 );
 
