@@ -1,83 +1,55 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-// CORS headers
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
+// Decode JSON input
+$input = json_decode(file_get_contents("php://input"), true);
+
+// Validate required fields
+$required = ['id', 'widget_name', 'feed_url', 'layout', 'sublayout', 'width_mode', 'width_value', 'height_mode', 'height_value'];
+foreach ($required as $field) {
+    if (!isset($input[$field])) {
+        echo json_encode(["success" => false, "error" => "Missing field: $field"]);
+        exit;
+    }
 }
 
-// DB connection
-$mysqli = new mysqli("localhost", "root", "", "college");
-if ($mysqli->connect_error) {
-    http_response_code(500);
-    echo json_encode(["success" => false, "error" => "DB connection failed: " . $mysqli->connect_error]);
-    exit();
+// Connect to DB
+$conn = new mysqli("localhost", "root", "", "feedspotclone");
+if ($conn->connect_error) {
+    echo json_encode(["success" => false, "error" => "DB Connection Failed"]);
+    exit;
 }
 
-// Get POST data
-$id = $_POST["id"] ?? null;
-$widgetName = $_POST["widget_name"] ?? null;
-$feedUrl = $_POST["feed_url"] ?? null;
-$layout = $_POST["layout"] ?? null;
-$sublayout = $_POST["sublayout"] ?? null;
-$widthMode = $_POST["width_mode"] ?? null;
-$widthValue = $_POST["width_value"] ?? null;
-$heightMode = $_POST["height_mode"] ?? null;
-$heightValue = $_POST["height_value"] ?? null;
-$topic = $_POST["topic"] ?? null;
+// Escape inputs
+$id = $conn->real_escape_string($input['id']);
+$widget_name = $conn->real_escape_string($input['widget_name']);
+$feed_url = $conn->real_escape_string($input['feed_url']);
+$layout = $conn->real_escape_string($input['layout']);
+$sublayout = $conn->real_escape_string($input['sublayout']);
+$width_mode = $conn->real_escape_string($input['width_mode']);
+$width_value = (int)$input['width_value'];
+$height_mode = $conn->real_escape_string($input['height_mode']);
+$height_value = (int)$input['height_value'];
 
-// Validation
-if (
-    !$id || !$widgetName || !$feedUrl || !$layout || !$sublayout ||
-    !$widthMode || !$widthValue || !$heightMode || !$heightValue || !$topic
-) {
-    echo json_encode([
-        "success" => false,
-        "error" => "Missing fields",
-        "debug" => $_POST
-    ]);
-    exit();
-}
+// Update query
+$sql = "UPDATE widgetjson SET 
+  widget_name = '$widget_name',
+  feed_url = '$feed_url',
+  layout = '$layout',
+  sublayout = '$sublayout',
+  width_mode = '$width_mode',
+  width_value = $width_value,
+  height_mode = '$height_mode',
+  height_value = $height_value
+WHERE id = $id";
 
-// ✅ Updated query to include `topic`
-$stmt = $mysqli->prepare("
-    UPDATE Widgets
-    SET widget_name = ?, feed_url = ?, layout = ?, sublayout = ?,
-        width_mode = ?, width_value = ?, height_mode = ?, height_value = ?, topic = ?
-    WHERE id = ?
-");
-
-if (!$stmt) {
-    echo json_encode(["success" => false, "error" => "Prepare failed: " . $mysqli->error]);
-    exit();
-}
-
-$stmt->bind_param(
-    "ssssssissi",
-    $widgetName,
-    $feedUrl,
-    $layout,
-    $sublayout,
-    $widthMode,
-    $widthValue,
-    $heightMode,
-    $heightValue,
-    $topic,
-    $id
-);
-
-if ($stmt->execute()) {
-    echo json_encode(["success" => true, "message" => "Widget updated"]);
+if ($conn->query($sql) === TRUE) {
+    echo json_encode(["success" => true]);
 } else {
-    echo json_encode(["success" => false, "error" => "Execute failed: " . $stmt->error]);
+    echo json_encode(["success" => false, "error" => $conn->error]);
 }
 
-$stmt->close();
-$mysqli->close();
+$conn->close();
 ?>

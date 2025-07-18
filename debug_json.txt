@@ -1,0 +1,13 @@
+Array
+(
+    [user_id] => 1
+    [widget_name] => dfdfdf
+    [feed_url] => https://example.com/xbox-2025
+    [layout] => magazine
+    [sublayout] => small
+    [width_mode] => responsive
+    [width_value] => 350
+    [height_mode] => pixels
+    [height_value] => 510
+    [topic] => Most Anticipated Xbox Games This Year
+)
