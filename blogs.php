@@ -1,20 +1,14 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-
-// Enable CORS
-header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-// Preflight request
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     http_response_code(200);
     exit();
 }
 
-
-// connect to MySQL
 $mysqli = new mysqli("localhost", "root", "", "college");
 
 if ($mysqli->connect_errno) {
@@ -23,16 +17,24 @@ if ($mysqli->connect_errno) {
     exit();
 }
 
-// get all blogs, including the new `image` column
-$sql = "SELECT id, title, category, url, image FROM blogs";
-$result = $mysqli->query($sql);
-
-$blogs = [];
-while ($row = $result->fetch_assoc()) {
-    $blogs[] = $row;
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+    $stmt = $mysqli->prepare("SELECT id, title, category, url, image FROM blogs WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $blog = $result->fetch_assoc();
+    echo json_encode($blog ?: []);
+    $stmt->close();
+} else {
+    $sql = "SELECT id, title, category, url, image FROM blogs";
+    $result = $mysqli->query($sql);
+    $blogs = [];
+    while ($row = $result->fetch_assoc()) {
+        $blogs[] = $row;
+    }
+    echo json_encode($blogs);
 }
-
-echo json_encode($blogs);
 
 $mysqli->close();
 ?>

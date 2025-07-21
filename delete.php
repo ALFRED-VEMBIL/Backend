@@ -30,7 +30,7 @@ if (!$id) {
 }
 
 // delete from DB
-$stmt = $mysqli->prepare("DELETE FROM Widgets WHERE id = ?");
+$stmt = $mysqli->prepare("DELETE FROM widgetjson WHERE id = ?");
 if (!$stmt) {
     echo json_encode(["success" => false, "error" => "Prepare failed: " . $mysqli->error]);
     exit();

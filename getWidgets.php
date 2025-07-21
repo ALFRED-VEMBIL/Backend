@@ -44,7 +44,7 @@ if (isset($_GET['id'])) {
 
     $stmt->close();
 } else {
-    // 🔽 No ID → return all widgets
+    //  No ID → return all widgets
     $result = $mysqli->query("SELECT * FROM widgetjson ORDER BY id DESC");
     $widgets = [];
 
