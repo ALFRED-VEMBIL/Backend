@@ -33,7 +33,7 @@ $userId = $data["user_id"];
 $widgetName = $data["widget_name"];
 $jsonString = json_encode($data);
 
-// ✅ Detect if this is an update or insert
+// Detect if this is an update or insert
 if (isset($data["id"])) {
     // UPDATE existing widget
     $widgetId = intval($data["id"]);
