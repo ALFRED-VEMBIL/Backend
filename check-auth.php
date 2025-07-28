@@ -18,7 +18,7 @@ if (!isset($_COOKIE["token"])) {
     exit;
 }
 
-$decoded = verify_jwt($_COOKIE["token"]);
+$decoded = decodeJWT($_COOKIE["token"]);
 
 if ($decoded) {
     echo json_encode([

@@ -3,19 +3,21 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-$JWT_SECRET = "your_secret_key_here"; // replace with env-based secret
+// ✅ SECRET SHOULD BE SAME EVERYWHERE
+$JWT_SECRET = "secret123";
 
 function generate_jwt($payload) {
     global $JWT_SECRET;
     return JWT::encode($payload, $JWT_SECRET, 'HS256');
 }
 
-function verify_jwt($token) {
+function decodeJWT($token) {
     global $JWT_SECRET;
     try {
-        return JWT::decode($token, new Key($JWT_SECRET, 'HS256'));
+        return (array) JWT::decode($token, new Key($JWT_SECRET, 'HS256'));
     } catch (Exception $e) {
-        return false;
+        // Optional: Log error for debugging (but don't expose it to frontend in production)
+        error_log("JWT decode error: " . $e->getMessage());
+        return null;
     }
 }
-?>
