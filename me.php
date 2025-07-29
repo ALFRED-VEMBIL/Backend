@@ -35,6 +35,7 @@ try {
         "user" => [
             "id" => $decoded->user_id,
             "email" => $decoded->email
+            
         ]
     ]);
 } catch (Exception $e) {
