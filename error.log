@@ -1,0 +1,60 @@
+[29-Jul-2025 07:16:31 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:31 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:33 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:33 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:36 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:36 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:37 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:37 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:37 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:37 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:37 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:37 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:38 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:38 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:38 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:38 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:42 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:16:42 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:17:11 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:17:11 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:24
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 24
+[29-Jul-2025 07:25:23 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 29
+[29-Jul-2025 07:25:23 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:29
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 29
+[29-Jul-2025 07:28:05 UTC] PHP Warning:  require_once(jwt_utils.php): Failed to open stream: No such file or directory in C:\wamp64\www\feedspotclone\saveWidgets.php on line 29
+[29-Jul-2025 07:28:05 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'jwt_utils.php' (include_path='.;C:\php\pear') in C:\wamp64\www\feedspotclone\saveWidgets.php:29
+Stack trace:
+#0 {main}
+  thrown in C:\wamp64\www\feedspotclone\saveWidgets.php on line 29

@@ -39,7 +39,10 @@ if (isset($_GET['id'])) {
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
-        $row['widget'] = json_decode($row['widget'], true);
+        $widgetData = json_decode($row['widget'], true);
+        $row['widget'] = $widgetData;
+        $row['feed_url'] = $widgetData['feed_url'] ?? ''; // ✅ Add this line
+
         echo json_encode(["success" => true, "data" => $row], JSON_UNESCAPED_SLASHES);
     } else {
         echo json_encode(["success" => false, "error" => "Widget not found"]);
@@ -57,13 +60,16 @@ elseif ($userId) {
 
     $widgets = [];
     while ($row = $result->fetch_assoc()) {
-        $row['widget'] = json_decode($row['widget'], true);
+        $widgetData = json_decode($row['widget'], true);
+        $row['widget'] = $widgetData;
+        $row['feed_url'] = $widgetData['feed_url'] ?? ''; // ✅ Add this line
         $widgets[] = $row;
     }
 
     echo json_encode(["success" => true, "data" => $widgets], JSON_UNESCAPED_SLASHES);
     $stmt->close();
 }
+
 
 // Case 3: Unauthorized access (no token, no ID)
 else {
